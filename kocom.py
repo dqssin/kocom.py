@@ -410,8 +410,8 @@ def mqtt_on_message(mqttc, obj, msg):
 
     # thermo heat/off : kocom/room/thermo/3/heat_mode/command
     if 'thermo' in topic_d and 'heat_mode' in topic_d:
-#       heatmode_dic = {'heat': '11', 'off': '01'}
-        heatmode_dic = {'heat': '11', 'off': '00'}
+        heatmode_dic = {'heat': '11', 'off': '01'}
+#        heatmode_dic = {'heat': '11', 'off': '00'}
 
         dev_id = device_h_dic['thermo']+'{0:02x}'.format(int(topic_d[3]))
         q = query(dev_id)
@@ -479,8 +479,9 @@ def mqtt_on_message(mqttc, obj, msg):
     # kocom/livingroom/fan/set_preset_mode/command
     elif 'fan' in topic_d and 'set_preset_mode' in topic_d:
         dev_id = device_h_dic['fan'] + room_h_dic.get(topic_d[1])
-        onoff_dic = {'off':'0000', 'on':'1101'}  
+       #onoff_dic = {'off':'0000', 'on':'1101'}  
        #onoff_dic = {'off':'1000', 'on':'1100'}
+        onoff_dic = {'off':'0001', 'on':'1101'}
         speed_dic = {'Off':'00', 'Low':'40', 'Medium':'80', 'High':'c0'}
         if command == 'Off':
             onoff = onoff_dic['off']
@@ -496,6 +497,7 @@ def mqtt_on_message(mqttc, obj, msg):
         dev_id = device_h_dic['fan'] + room_h_dic.get(topic_d[1])
         onoff_dic = {'off':'0000', 'on':'1101'}  
        #onoff_dic = {'off':'1000', 'on':'1100'}
+       onoff_dic = {'off':'0001', 'on':'1101'}
         speed_dic = {'Low':'40', 'Medium':'80', 'High':'c0'}
         init_fan_mode = config.get('User', 'init_fan_mode')
         if command in onoff_dic.keys(): # fan on off with previous speed
