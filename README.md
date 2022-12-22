@@ -3,7 +3,7 @@
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield] ![Supports i386 Architecture][i386-shield]
 
 ## About
-Kocom Wallpad with RS485 for 힐스테이트푸르지오수원
+Kocom Wallpad with RS485 for 백현마을2단지
 
 ## Installation
 
@@ -20,7 +20,7 @@ Kocom Wallpad with RS485 for 힐스테이트푸르지오수원
 애드온을 재 설치 해야 합니다
 
 ## Change log
-
+(2022-12-22 수정) 거실 외 전등 교체로 방에 등 스위치 없음..hexa code 조금씩 다름..
 (2022-11-07 수정) bedroom 삭제, room1,2,3으로 변경, kitchen 추가, 환기On/Off 제어 1,2,3단 반영
 
 -------------------------------------------------------------------------------------
