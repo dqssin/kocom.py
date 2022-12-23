@@ -738,7 +738,11 @@ def poll_state(enforce=False):
     global poll_timer
     poll_timer.cancel()
 
-    dev_list = [x.strip() for x in config.get('Device','enabled').split(',')]
+    #dev_list = [x.strip() for x in config.get('Device','enabled').split(',')]
+    dev_enabled = 'fan, elevator, light_livingroom, thermo_livingroom, thermo_room1, thermo_room2, thermo_room3'
+    dev_list = [x.strip() for x in dev_enabled.split(',')]
+    logging.info('enabled_in_conf_pool_state: '+config.get('Device','enabled'))
+    
     no_polling_list = ['wallpad', 'elevator']
 
     #thread health check
