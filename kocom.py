@@ -557,8 +557,10 @@ def packet_processor(p):
 #===== publish MQTT Devices Discovery =====
 
 def discovery():
-    dev_list = [x.strip() for x in config.get('Device','enabled').split(',')]
-    logging.info(config.get('Device','enabled'))
+    #dev_list = [x.strip() for x in config.get('Device','enabled').split(',')]
+    dev_enabled = 'fan, elevator, light_livingroom, thermo_livingroom, thermo_room1, thermo_room2, thermo_room3'
+    dev_list = [x.strip() for x in dev_enabled.split(',')]
+    logging.info('enabled_in_conf: '+config.get('Device','enabled'))
     for t in dev_list:
         dev = t.split('_')
         sub = ''
