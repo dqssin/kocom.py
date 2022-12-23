@@ -4,7 +4,7 @@
 '''
  python kocom script
 
- : forked from script written by vifrost, kyet, 룰루해피, 따분, Susu Daddy
+ : forked from script written by dqssin, vifrost, kyet, 룰루해피, 따분, Susu Daddy
 
  apt-get install mosquitto
  python3 -m pip install pyserial
@@ -23,7 +23,7 @@ import configparser
 
 
 # define -------------------------------
-SW_VERSION = '2022.12.22.03'
+SW_VERSION = '2022.12.23.01'
 CONFIG_FILE = 'kocom.conf'
 BUF_SIZE = 100
 
@@ -558,6 +558,7 @@ def packet_processor(p):
 
 def discovery():
     dev_list = [x.strip() for x in config.get('Device','enabled').split(',')]
+    logging.info(config.get('Device','enabled'))
     for t in dev_list:
         dev = t.split('_')
         sub = ''
