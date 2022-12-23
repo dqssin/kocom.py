@@ -1,6 +1,6 @@
 ---
 name: Kocom Wallpad with RS485 for 
-version: 2022.12.23.04
+version: 2022.12.24.01
 slug: kocom_py
 description: Kocom Wallpad for Home Assistant
 arch:
