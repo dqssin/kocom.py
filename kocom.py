@@ -23,7 +23,7 @@ import configparser
 
 
 # define -------------------------------
-SW_VERSION = '2022.12.23.01'
+SW_VERSION = '2022.12.25.01'
 CONFIG_FILE = 'kocom.conf'
 BUF_SIZE = 100
 
@@ -209,6 +209,7 @@ def send(dest, src, cmd, value, log=None, check_ack=True):
     ack_data.clear()
     ret = False
     for seq_h in seq_t_dic.keys(): # if there's no ACK received, then repeat sending with next sequence code
+        if log=='light':cmd='01'
         payload = type_h_dic['send'] + seq_h + '00' + dest + src + cmd + value
         send_data = header_h + payload + chksum(payload) + trailer_h
         try:
@@ -225,6 +226,7 @@ def send(dest, src, cmd, value, log=None, check_ack=True):
             break
 
         # wait and checking for ACK
+        cmd = '00'
         ack_data.append(type_h_dic['ack'] + seq_h + '00' +  src + dest + cmd + value)
         try:
             ack_q.get(True, 1.3+0.2*random.random()) # random wait between 1.3~1.5 seconds for ACK
@@ -440,10 +442,10 @@ def mqtt_on_message(mqttc, obj, msg):
             while light_id > 0:
                 n = light_id % 10
                 value = value[:n*2-2] + onoff_hex + value[n*2:]
-                send_wait_response(dest=dev_id, cmd='01', value=value, log='light')
+                send_wait_response(dest=dev_id, value=value, log='light')
                 light_id = int(light_id/10)
         else:
-            send_wait_response(dest=dev_id, cmd='01', value=value, log='light')
+            send_wait_response(dest=dev_id, value=value, log='light')
 
     # gas off : kocom/livingroom/gas/command
     elif 'gas' in topic_d:
