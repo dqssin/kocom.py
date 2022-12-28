@@ -36,14 +36,16 @@ packet_size = 21  # total 21bytes
 chksum_position = 18  # 18th byte
 
 type_t_dic = {'30b':'send', '30d':'ack'}
-seq_t_dic = {'c':1, 'd':2, 'e':3, 'f':4}
-device_t_dic = {'01':'wallpad', '0e':'light', '2c':'gas', '36':'thermo', '3b': 'plug', '44':'elevator', '48':'fan'}
+#seq_t_dic = {'c':1, 'd':2, 'e':3, 'f':4}
+#seq_t_dic = {'c':1, 'd':2, 'e':3}
+device_t_dic = {'00':'gateway', '01':'wallpad', '0e':'light', '2c':'gas', '36':'thermo', '3b': 'plug', '44':'elevator', '48':'fan'}
 cmd_t_dic = {'00':'state', '01':'on', '02':'off', '3a':'query'}
 room_t_dic = {'00':'livingroom', '01':'room1', '02':'room2', '03':'room3', '04':'kitchen'}
 
 type_h_dic = {v: k for k, v in type_t_dic.items()}
 seq_h_dic = {v: k for k, v in seq_t_dic.items()}
-device_h_dic = {v: k for k, v in device_t_dic.items()}
+#device_h_dic = {v: k for k, v in device_t_dic.items()}
+device_h_dic = {'wallpad':'01', 'light':'0e', 'gas':'2c', 'thermo':'36', 'plug':'3b', 'elevator':'44', 'fan':'48'}
 cmd_h_dic = {v: k for k, v in cmd_t_dic.items()}
 room_h_dic = {'livingroom':'00', 'myhome':'00', 'room1':'01', 'room2':'02', 'room3':'03', 'kitchen':'04'}
 
@@ -333,9 +335,9 @@ def query(device_h, publish=False, enforce=False):
 
 
 def send_wait_response(dest, src=device_h_dic['wallpad']+'00', cmd=cmd_h_dic['state'], value='0'*16, log=None, check_ack=True, publish=True):
-    #logging.debug('waiting for send_wait_response :'+dest)
+    logging.debug('waiting for send_wait_response :'+dest)
     wait_target.put(dest)
-    #logging.debug('entered send_wait_response :'+dest)
+    logging.debug('entered send_wait_response :'+dest)
     ret = { 'value':'0'*16, 'flag':False }
 
     if send(dest, src, cmd, value, log, check_ack) != False:
@@ -346,7 +348,7 @@ def send_wait_response(dest, src=device_h_dic['wallpad']+'00', cmd=cmd_h_dic['st
         except queue.Empty:
             pass
     wait_target.get()
-    #logging.debug('exiting send_wait_response :'+dest)
+    logging.debug('exiting send_wait_response :'+dest)
     return ret
 
 
