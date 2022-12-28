@@ -499,7 +499,7 @@ def mqtt_on_message(mqttc, obj, msg):
     # kocom/livingroom/fan/command
     elif 'fan' in topic_d:
         dev_id = device_h_dic['fan'] + room_h_dic.get(topic_d[1])
-        onoff_dic = {'off':'0000', 'on':'1101'}  
+       #onoff_dic = {'off':'0000', 'on':'1101'}  
        #onoff_dic = {'off':'1000', 'on':'1100'}
         onoff_dic = {'off':'0001', 'on':'1101'}
         speed_dic = {'Low':'40', 'Medium':'80', 'High':'c0'}
@@ -507,7 +507,7 @@ def mqtt_on_message(mqttc, obj, msg):
         if command in onoff_dic.keys(): # fan on off with previous speed
             onoff = onoff_dic.get(command)
             speed = speed_dic.get(init_fan_mode)  #value = query(dev_id)['value']  #speed = value[4:6]
-
+        logging.info('onoff value: '+onoff+'speed: '+speed)
         value = onoff + speed + '0'*10
         send_wait_response(dest=dev_id, value=value, log='fan')
 
