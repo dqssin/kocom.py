@@ -37,8 +37,8 @@ chksum_position = 18  # 18th byte
 
 type_t_dic = {'30b':'send', '30d':'ack'}
 #seq_t_dic = {'c':1, 'd':2, 'e':3, 'f':4}
-seq_t_dic = {'c':1, 'd':2, 'e':3}
-device_t_dic = {'00':'wallpad', '01':'wallpad', '0e':'light', '2c':'gas', '36':'thermo', '3b': 'plug', '44':'elevator', '48':'fan'}
+seq_t_dic = {'c':1, 'd':2, 'e':3} # no bf or df in this house
+device_t_dic = {'00':'wallpad', '01':'wallpad', '0e':'light', '2c':'gas', '36':'thermo', '3b': 'plug', '44':'elevator', '48':'fan'} #found 00 in src or des by packet analysis
 cmd_t_dic = {'00':'state', '01':'on', '02':'off', '3a':'query'}
 room_t_dic = {'00':'livingroom', '01':'room1', '02':'room2', '03':'room3', '04':'kitchen'}
 
@@ -504,7 +504,7 @@ def mqtt_on_message(mqttc, obj, msg):
        #onoff_dic = {'off':'0001', 'on':'1101'}
         speed_dic = {'Low':'40', 'Medium':'80', 'High':'c0'}
        #init_fan_mode = config.get('User', 'init_fan_mode')
-        init_fan_mode = 'High'
+        init_fan_mode = 'High' #could not read kocom.conf 
         if command in onoff_dic.keys(): # fan on off with previous speed
             onoff = onoff_dic.get(command)
             speed = speed_dic.get(init_fan_mode)  #value = query(dev_id)['value']  #speed = value[4:6]
@@ -563,7 +563,7 @@ def packet_processor(p):
 
 def discovery():
     #dev_list = [x.strip() for x in config.get('Device','enabled').split(',')]
-    dev_enabled = 'fan, elevator, light_livingroom, thermo_livingroom, thermo_room1, thermo_room2, thermo_room3'
+    dev_enabled = 'fan, elevator, light_livingroom, thermo_livingroom, thermo_room1, thermo_room2, thermo_room3' #
     dev_list = [x.strip() for x in dev_enabled.split(',')]
     logging.info('enabled_in_conf: '+config.get('Device','enabled'))
     for t in dev_list:
